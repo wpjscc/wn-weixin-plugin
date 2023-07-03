@@ -12,7 +12,7 @@ return [
             ],
             'config_namespace' => 'xcx',
             'config' => [
-                'token'          => 'test',
+                'token'          => env('XCX_TOEKN', 'test'),
                 'appid'          => env('XCX_APPID',''),
                 'appsecret'      => env('XCX_APPSECRET',''),
                 'encodingaeskey' => env('XCX_ENCODINGAESKEY',''),
@@ -33,7 +33,7 @@ return [
             ],
             'config_namespace' => 'wechat',
             'config' => [
-                'token'          => 'test',
+                'token'          => env('WECHAT_TOEKN', 'test'),
                 'appid'          => env('WECHAT_APPID',''),
                 'appsecret'      => env('WECHAT_APPSECRET',''),
                 'encodingaeskey' => env('WECHAT_ENCODINGAESKEY',''),
