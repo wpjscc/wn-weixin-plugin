@@ -1,0 +1,17 @@
+{
+    "name": "wpjscc/wn-weixin-plugin",
+    "license": "MIT",
+    "type": "winter-plugin",
+    "authors": [
+        {
+            "name": "wpjscc",
+            "email": "wpjscc@gmail.com"
+        }
+    ],
+    "require": {
+
+    },
+    "extra": {
+        "installer-name": "weixin"
+    }
+}
