@@ -1,7 +1,7 @@
 <?php namespace Wpjscc\Weixin\Models;
 
 use Model;
-use Winter\User\Models\User;
+use Wpjscc\Api\Models\User;
 
 /**
  * Mini Model
