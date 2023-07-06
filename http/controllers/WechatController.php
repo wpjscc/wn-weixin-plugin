@@ -32,7 +32,7 @@ class WechatController extends ControllerBase
                 $user->username = 'wechat_'.$openid;
                 $user->email = 'wechat_'.$openid.'@qq.com';
                 // $user->sex = $data['gender'];
-                $user->save();
+                $user->save(['force' => true]);
                 $mini->user_id = $user->id;
             } else {
                 $user = $mini->user;
