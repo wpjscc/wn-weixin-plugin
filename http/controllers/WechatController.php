@@ -31,8 +31,8 @@ class WechatController extends ControllerBase
                 $user->name = $data['nickname'];
                 $user->username = 'wechat_'.$openid;
                 $user->email = 'wechat_'.$openid.'@qq.com';
-                // $user->sex = $data['gender'];
-                $user->save(['force' => true]);
+                $user->password = str_random(8);
+                $user->forceSave();
                 $mini->user_id = $user->id;
             } else {
                 $user = $mini->user;
@@ -40,14 +40,14 @@ class WechatController extends ControllerBase
 
             if (!$user->is_activated) {
                 $user->is_activated = true;
-                $user->save();
+                $user->forceSave();
             }
             $mini->save();
 
             $file = new File();
             $file->fromUrl($data['headimgurl']);
             $user->avatar = $file;
-            $user->save();
+            $user->forceSave();
             
 
             $query = $request->query();
