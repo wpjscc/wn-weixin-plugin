@@ -24,7 +24,6 @@ class WechatController extends ControllerBase
         $accessToken = app('wechat_oauth')->getOauthAccessToken($request->code);
 
         $data = app('wechat_oauth')->getUserInfo($accessToken['access_token'], $accessToken['openid'], $lang = 'zh_CN');
-        dd($data);
         $openid = $data['openid'];
         $mini = Mini::saveWechatUser($openid, $data['nickname'], $data['headimgurl'], $data['sex'] ?? 0);
         if (!$mini->user) {
