@@ -14,7 +14,7 @@ class WechatController extends ControllerBase
 {
     public function redirect(Request $request)
     {
-        $redirect = app('wechat_oauth')->getOauthRedirect(sprintf(route('wechat.callback').'?%s', http_build_query($request->query())), 'snsapi_userinfo');
+        $redirect = app('wechat_oauth')->getOauthRedirect(sprintf(route('wechat.callback').'?%s', http_build_query($request->query())), '', 'snsapi_userinfo');
         return redirect($redirect);
     }
 
