@@ -1,7 +1,7 @@
 <?php
 
 
-namespace WPjscc\Weixin\Http\Controllers;
+namespace Wpjscc\Weixin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as ControllerBase;
@@ -14,7 +14,16 @@ class WechatController extends ControllerBase
 {
     public function redirect(Request $request)
     {
-        $redirect = app('wechat_oauth')->getOauthRedirect(sprintf(route('wechat.callback').'?%s', http_build_query($request->query())), '', 'snsapi_userinfo');
+        \Log::info('redirect:query', $request->query());
+        $query = $request->query();
+        $cacheKey = str_random(10);
+        \Cache::put('wechat:cache:'.$cacheKey, $query, 60);
+        $redirect = app('wechat_oauth')->getOauthRedirect(sprintf(route('wechat.callback').'?%s', http_build_query([
+            'cache_key' => $cacheKey
+        ])), '', 'snsapi_userinfo');
+        \Log::info('redirect:query', [
+            $redirect
+        ]);
         return redirect($redirect);
     }
 
@@ -52,6 +61,18 @@ class WechatController extends ControllerBase
         
 
         $query = $request->query();
+        if (isset($query['cache_key'])) {
+            $cacheKey = $query['cache_key'];
+            $requestQuery = \Cache::pull('wechat:cache:'.$cacheKey);
+            if ($requestQuery && is_array($requestQuery)) {
+                unset($query['cache_key']);
+                unset($requestQuery['code']);
+                unset($requestQuery['token']);
+                unset($requestQuery['state']);
+                $query = array_merge($query, $requestQuery);
+            }
+        }
+        \Log::info('callback:query', $query);
         unset($query['token']);
         unset($query['code']);
         unset($query['state']);
